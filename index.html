@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Export github issues</title>
+    <style type="text/css">
+    .output {
+      width: 50%;
+      min-height: 600px;
+      max-height: 600px;
+      background-color: #F1F1F1;
+      overflow-y: auto;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      float: left;
+      padding:20px;
+      word-wrap: break-word;
+    }
+    .issue{
+      width: 100%;
+      min-height: 100px;
+      height: auto;
+      word-wrap: break-word;
+      padding:10px;
+      box-sizing: border-box;
+      position: relative;
+      margin-bottom: 20px;
+      border-bottom: 1px dashed #ccc;
+    }
+    </style>
+  </head>
+  <body  ng-app="myExporter" ng-controller="exportCtrl">
+  	
+
+  <div class="container">
+    <h2>Export github issues</h2>
+    <label>Github user name: </label> <input ng-model="user" placeholder="write user name"></input>
+    <br><br>
+    <label>Github repo: </label> <input ng-model="repo" placeholder="write repo"></input>
+    <br><br>
+    <label>Output:</label> 
+    <br><br>
+    <br><br>
+    <button ng-click="export()">Export</button>
+    <br><br>
+    <h3 ng-show="load">Exporting...</h3>
+
+    <div class="output" ng-show="output">.
+    <h2>JSON output</h2>
+      {{ output | json }}
+    </div>
+
+    <div class="output" ng-show="output">
+      <h2>Simple text output</h2>
+      <div class="issue" ng-repeat="n in output"> 
+          <strong>{{n.title}}</strong> <span>&nbsp;&nbsp;{{n.state}}</span><br><span> {{n.created_at | date}}</span>
+          <br><br>
+          <span>{{n.body}}</span>
+      </div>
+    </div>
+
+
+  </div>
+
+
+
+  </body>
+  <script src="scripts/jquery.min.js" type="text/javascript"></script>
+  <script src="scripts/angular.min.js" type="text/javascript"></script>
+  <script src="scripts/controller.js" type="text/javascript"></script>
+</html>
