@@ -38,27 +38,34 @@
     <br><br>
     <label>Github repo: </label> <input ng-model="repo" placeholder="write repo"></input>
     <br><br>
-    <label>Output:</label> 
+    <label>assignee:</label> 
     <br><br>
+    <label><input type="radio" ng-model="assignee" value="all">All</label>
+    <label><input type="radio" ng-model="assignee" value="unassigned">Unasigned</label>
+    <label><input type="radio" ng-model="assignee" value="somebody">Assigned to somebody</label>
+    <label><input type="radio" ng-model="assignee" value="to">Assigned to:</label>
+    <input ng-show="assignee === 'to' " ng-model="assignedUser" placeholder="github user name"></input> 
     <br><br>
     <button ng-click="export()">Export</button>
     <br><br>
-    <h3 ng-show="load">Exporting...</h3>
-
+    <h4 ng-show="load">Exporting...</h4>
+    <h4 ng-show="done">Total matching elements: {{output.length}}</h4>
     <div class="output" ng-show="output">.
-    <h2>JSON output</h2>
+    <h4>JSON output</h4>
       {{ output | json }}
     </div>
 
     <div class="output" ng-show="output">
-      <h2>Simple text output</h2>
+      <h4>Simple text output</h4>
       <div class="issue" ng-repeat="n in output"> 
           <strong>{{n.title}}</strong> <span>&nbsp;&nbsp;{{n.state}}</span><br><span> {{n.created_at | date}}</span>
+          <br>
+          <span>Assigned to:</span> <span> {{ n.assignee.login || "Nobody" }}</span>
           <br><br>
           <span>{{n.body}}</span>
       </div>
     </div>
-
+    <h4 ng-show="done && output.length === 0">No matches found according to current filter conditions</h4>
 
   </div>
 
